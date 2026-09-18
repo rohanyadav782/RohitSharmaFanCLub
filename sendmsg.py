@@ -85,9 +85,19 @@ Password :- {detail[4]}
 Don't Share this credentials with anyone.
 
 Best Regards,
-rohitsharmafanclub782
+Rohit Sharma FanClub
+
 """
         self.send_sms(str(detail[2]), self.otp_msg)
         self.send_mail(detail[3],self.otp_msg,title)
         st.success("Account Details Shared")
 
+    def welcomemsg(self,user):
+        msg = f"""
+Hey admin,
+{user} joined Rohit Sharma FanClub        
+        """
+        try:
+            self.send_sms(os.getenv("admin_number"), msg)
+        except Exception as e:
+            ""

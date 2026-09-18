@@ -23,7 +23,16 @@ class LoginPage:
             self.contact_list = self.df["contact_number"].tolist()
             self.mail_list = self.df["email"].tolist()
             self.cursor.execute("SELECT file_data FROM media_files WHERE description = 'The GOAT🔥'")
-            st.session_state.loginimage = self.cursor.fetchone()[0]
+            try:
+                st.session_state.loginimage = self.cursor.fetchone()[0]
+                st.title("🏏 Rohit Sharma FanClub")
+                try:
+                    st.image(io.BytesIO(st.session_state.loginimage))
+                except psycopg2.OperationalError as e:
+                    st.error("Network Error!,Try to delete AppCache/Reload page ")
+
+            except Exception as e:
+                st.error("Files not initialize, Plz try to delete AppCache/Reload page ")
 
         except psycopg2.OperationalError as e:
             st.error("Network Error!,Try to delete AppCache/Reload page ")
@@ -31,7 +40,7 @@ class LoginPage:
     def login(self):
         try:
             username = st.text_input("Enter User-ID").lower().capitalize()
-            login_password = st.text_input("Enter your Password",'abc1234',type="password")
+            login_password = st.text_input("Enter your Password",type="password",key="Login_password")
 
             if st.button("Login", icon=":material/thumb_up:", width='stretch'):
                 self.cursor.execute("SELECT user_id,contact_number,email,password FROM users_data")
@@ -79,13 +88,15 @@ class LoginPage:
         with col1:
             name = st.text_input("Enter your full name").title()
             username = st.text_input("Enter User-ID ").lower().capitalize()
-            gender = st.selectbox("Select Gender",['Male','Female','Other'])
+            gender = st.selectbox("Select Gender",['Male','Female','Other'],key="Gender Select")
             number = st.text_input("Enter your contact number")
         with col2:
             mail = st.text_input("Enter your email-ID").lower()
-            password = st.text_input("Enter your Password",type="password")
-            confirm_password = st.text_input("Confirm Password",type="password")
-            otp = st.text_input("Enter OTP here","xxxx")
+            password = st.text_input("Enter your Password",key="new_account_password",type="password")
+            msgchoice = st.selectbox("Receive OTP msg on...? ", ["Email", "Contact_Number"],key="OTP msg choice")
+
+            # confirm_password = st.text_input("Confirm Password",type="password")
+            otp = st.text_input("Enter OTP here",key ="otp_input")
 
         with col1:
             if st.button("Send OTP for Verification"):
@@ -100,13 +111,13 @@ class LoginPage:
                         st.warning("Number already used!")
                     elif not mail.endswith("@gmail.com") or mail == "":
                         st.warning("Please enter valid gmail address!")
-                    elif password!=confirm_password:
-                        st.warning("Password not matched!")
+                    # elif password!=confirm_password:
+                    #     st.warning("Password not matched!")
                     else:
-                        if not number.isdigit() or len(number)!=10 :
-                            message.forgot_password(mail,name)
+                        if msgchoice=="Email" :
+                            message.forgot_password(mail)
                         else:
-                            message.forgot_password(number,name)
+                            message.forgot_password(number)
 
         with col2:
             if st.button("Verify your details"):
@@ -121,8 +132,8 @@ class LoginPage:
                         st.warning("Number already used!")
                     elif not mail.endswith("@gmail.com")  or mail == "":
                         st.warning("Please enter valid gmail address!")
-                    elif password!=confirm_password:
-                        st.warning("Password not matched!")
+                    # elif password!=confirm_password:
+                    #     st.warning("Password not matched!")
                     elif message.otp == "":
                         st.warning("First click on send otp button")
                     elif message.otp != otp:
@@ -140,6 +151,7 @@ class LoginPage:
                         #     st.error("Database Connection Failed,Check you have strong network connection...! ")
 
         if account_verified == "yes":
+            message.welcomemsg(name)
             st.success("Account Successfully Created !,Let's Login and Enjoy")
 
     def help(self):
@@ -213,11 +225,6 @@ class LoginPage:
                     st.error("Connection Failed,Check you have strong network connection and reload it...! ")
 
     def choice_button(self):
-        st.title("🏏 Rohit Sharma FanClub")
-        try:
-            st.image(io.BytesIO(st.session_state.loginimage))
-        except psycopg2.OperationalError as e:
-            st.error("Network Error!,Try to delete AppCache/Reload page ")
 
         tab1, tab2 ,tab3 = st.tabs(['Login', "Create New Account","Forgot Account Detail"])
         with tab1:
