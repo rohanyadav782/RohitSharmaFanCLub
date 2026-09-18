@@ -167,7 +167,7 @@ class LoginPage:
             self.mail_list = self.df["email"].tolist()
             col1 , col2 = st.columns(2)
             with col1: 
-                self.number = st.text_input("Enter your mobile number","xxxxxxxxxx")
+                self.number = st.text_input("Enter your mobile number",key="help_number")
                 if st.button("Send OTP"):
 
                     with st.spinner("Sending otp..."):
@@ -188,7 +188,7 @@ class LoginPage:
         elif choice == "Email":
             col1, col2 = st.columns(2)
             with col1:
-                self.mail = st.text_input("Enter your email address", "xxxxxx@gmail.com")
+                self.mail = st.text_input("Enter your email address", key="help_mail")
                 if st.button("Send OTP"):
 
                     with st.spinner("Sending mail..."):
