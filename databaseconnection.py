@@ -8,12 +8,12 @@ import psycopg2
 class DatabaseConnection:
     def connect_db(_self):
         _self.conn = psycopg2.connect(
-            host=st.secrets("DB_HOST"),
-            database=st.secrets("DB_DATABASE"),
-            user=st.secrets("DB_USERNAME"),
-            password=st.secrets("DB_PASSWORD"),
-            port=st.secrets("DB_PORT"),
-            sslmode=st.secrets("DB_SSLMODE"),
+            host=st.secrets["DB_HOST"],
+            database=st.secrets["DB_DATABASE"],
+            user=st.secrets["DB_USERNAME"],
+            password=st.secrets["DB_PASSWORD"],
+            port=st.secrets["DB_PORT"],
+            sslmode=st.secrets["DB_SSLMODE"],
             connect_timeout=15,
             keepalives=1,
             keepalives_idle=30,
