@@ -5,7 +5,6 @@ from sendmsg import SendMsg
 from databaseconnection import DatabaseConnection
 import io
 
-from contact_support import ContactSupport
 message = SendMsg()
 
 @st.cache_resource
