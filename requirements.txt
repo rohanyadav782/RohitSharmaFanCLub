@@ -1,6 +1,6 @@
 groq==1.7.0
 numpy==2.5.3
-pandas==3.0.6
+pandas==3.0
 plotly==6.6.0
 protobuf==7.36.2
 psycopg2_binary==2.9.11
