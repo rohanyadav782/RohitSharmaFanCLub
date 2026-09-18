@@ -1,9 +1,12 @@
 groq==1.7.0
 numpy==2.5.3
-pandas==3.0
+pandas==2.2.3
 plotly==6.6.0
-protobuf==7.36.2
-psycopg2_binary==2.9.11
+protobuf==6.33.0
+psycopg2-binary==2.9.11
 python-dotenv==1.2.3
 Requests==2.34.2
 streamlit==1.55.0
+scikit-learn
+xgboost
+openpyxl
