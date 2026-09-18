@@ -7,7 +7,6 @@ from loginpage import LoginPage
 from aboutproject import AboutProject
 from profile import Profile
 from dataset import Dataset
-from contact_support import ContactSupport
 
 import streamlit as st
 
