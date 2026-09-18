@@ -11,9 +11,9 @@ class AiAssistant:
     def main(self):
         # Create the Gemini API client
         self.client = genai.Client(
-            api_key=os.getenv("gemini_api_key"))
+            api_key=st.secrets["GEMINI_API_KEY"])
 
-        self.groq_client = Groq(api_key=os.getenv("groq_api_key"))
+        self.groq_client = Groq(api_key=st.secrets["GROQ_API_KEY"])
 
         # System prompt that defines the AI assistant's behavior
         self.system_prompt = """

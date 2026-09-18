@@ -1,6 +1,5 @@
 import random
 import streamlit as st
-import os
 from dotenv import load_dotenv
 load_dotenv()
 # for message through number
@@ -14,14 +13,14 @@ from email.message import EmailMessage
 class SendMsg:
     def __init__(self):
         # on number
-        self.device_id = os.getenv("mobile_id")
-        self.username = os.getenv("mobile_username")
-        self.password = os.getenv("mobile_password")
-        self.url = os.getenv("mobile_url")
+        self.device_id = st.secrets["MOBILE_ID"]
+        self.username = st.secrets["MOBILE_USERNAME"]
+        self.password = st.secrets["MOBILE_PASSWORD"]
+        self.url = st.secrets["MOBILE_URL"]
 
         # for mail
-        self.sender_email = os.getenv("sender_email")
-        self.app_password = os.getenv("app_password")
+        self.sender_email = st.secrets["SENDER_MAIL"]
+        self.app_password = st.secrets["APP_PASSWORD"]
 
     def send_sms(self,number,message):
         payload = {"textMessage": {"text": message}, #required msg
@@ -98,6 +97,6 @@ Hey admin,
 {user} joined Rohit Sharma FanClub        
         """
         try:
-            self.send_sms(os.getenv("admin_number"), msg)
+            self.send_sms(st.secrets["ADMIN_NUMBER"], msg)
         except Exception as e:
             ""
