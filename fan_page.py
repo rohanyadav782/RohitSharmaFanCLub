@@ -6,13 +6,15 @@ from groq import Groq
 from databaseconnection import  DatabaseConnection
 from dotenv import load_dotenv
 load_dotenv()
-
+import random
 
 class FanPage:
     def __init__(self):
         self.model = None
-        self.client = genai.Client(
-            api_key=st.secrets["GEMINI_API_KEY"])
+        keys = [st.secrets["GEMINI1"], st.secrets["GEMINI2"], st.secrets["GEMINI3"], st.secrets["GEMINI4"],
+                st.secrets["GEMINI5"], ]
+
+        self.client = genai.Client(api_key=random.choice(keys))
         self.groq_client = Groq(api_key=st.secrets["GROQ_API_KEY"])
 
         # System prompt that defines the AI assistant's behavior
