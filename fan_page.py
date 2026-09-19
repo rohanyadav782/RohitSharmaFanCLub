@@ -103,10 +103,13 @@ class FanPage:
 
             st.subheader("Cricket News")
 
-            if self.news_groq=="":
-                st.markdown(self.response.text)
-            else:
+            if self.model=="groq":
                 st.markdown(self.news_groq)
+            else:
+                st.markdown(self.response.text)
+
+
+
 
     def upload_memory(self):
         file = st.file_uploader("Upload rohit memory")
