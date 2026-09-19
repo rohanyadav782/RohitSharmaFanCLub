@@ -47,18 +47,18 @@ class FanPage:
                         Make sure 2 new is belongs to rohit,1 belongs to Indian Player and remaining 2 belongs other cricket information
 
                 """
-        try:
-            groq_response = self.groq_client.chat.completions.create(
-                model="openai/gpt-oss-20b",
-                messages=[{"role": "system", "content": self.system_prompt},
-                          {"role": "user", "content": "give me exactly 5 cricket news items"}],
-                temperature=0.3,
-                max_tokens=1000)
 
-            self.news_groq = (groq_response.choices[0].message.content)
-            self.model="groq"
+        groq_response = self.groq_client.chat.completions.create(
+            model="openai/gpt-oss-20b",
+            messages=[{"role": "system", "content": self.system_prompt},
+                      {"role": "user", "content": "give me exactly 5 cricket news items"}],
+            temperature=0.3,
+            max_tokens=1000)
 
-        except Exception as e:
+        self.news_groq = (groq_response.choices[0].message.content)
+        self.model="groq"
+
+        if self.news_groq =="":
             self.response = self.client.models.generate_content(model="gemini-3.6-flash", contents=self.system_prompt + "refresh news dont share recent news")
             st.session_state.response = self.response
             self.model="gemini"
