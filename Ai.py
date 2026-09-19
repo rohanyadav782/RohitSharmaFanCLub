@@ -118,7 +118,7 @@ class AiAssistant:
                     with st.spinner(
                         "Thinking... 🏏"):
                         try:
-                            
+
                             keys = [st.secrets["GEMINI1"],st.secrets["GEMINI2"],st.secrets["GEMINI3"],st.secrets["GEMINI4"],st.secrets["GEMINI5"],]
 
                             self.client = genai.Client(api_key=random.choice(keys))
