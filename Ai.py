@@ -11,7 +11,7 @@ class AiAssistant:
     def main(self):
         # Create the Gemini API client
         self.client = genai.Client(
-            api_key=st.secrets["GEMINI1"])
+            api_key=st.secrets["GEMINI2"])
 
         # self.groq_client = Groq(api_key=st.secrets["GROQ_API_KEY"])
 
@@ -164,6 +164,6 @@ class AiAssistant:
 
             # HANDLE ERRORS
             except Exception as gemini_error:
-              st.error("Sorry, AI services are currently unavailable.")
+              st.error(gemini_error)
 
 
