@@ -171,6 +171,6 @@ class AiAssistant:
 
             # HANDLE ERRORS
             except Exception as gemini_error:
-              st.error(gemini_error)
+              st.error("AI Service Unavailable Right Now....!")
 
 
