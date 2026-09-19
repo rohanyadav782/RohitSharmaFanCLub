@@ -51,7 +51,7 @@ class FanPage:
             groq_response = self.groq_client.chat.completions.create(
                 model="openai/gpt-oss-20b",
                 messages=[{"role": "system", "content": self.system_prompt},
-                          {"role": "user", "content": self.system_prompt}],
+                          {"role": "user", "content": "give me exactly 5 cricket news items"}],
                 temperature=0.3,
                 max_tokens=1000)
 
@@ -104,9 +104,9 @@ class FanPage:
             st.subheader("Cricket News")
 
             if self.model=="groq":
-                st.markdown(self.news_groq)
+                    st.markdown(self.news_groq)
             else:
-                st.markdown(self.response.text)
+                    st.markdown(self.response.text)
 
 
 
