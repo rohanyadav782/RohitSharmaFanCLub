@@ -5,7 +5,7 @@ import streamlit as st
 load_dotenv()
 import psycopg2
 
-@st.cache_resource
+
 class DatabaseConnection:
     def connect_db(_self):
         _self.conn = psycopg2.connect(
