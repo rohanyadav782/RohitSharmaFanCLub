@@ -12,15 +12,6 @@ class AiAssistant:
 
     def main(self):
         # Create the Gemini API client
-        keys = [st.secrets["GEMINI1"],
-                st.secrets["GEMINI2"],
-                st.secrets["GEMINI3"],
-                st.secrets["GEMINI4"],
-                st.secrets["GEMINI5"],
-
-        ]
-        self.client = genai.Client(
-            api_key= random.choice(keys))
 
         self.groq_client = Groq(api_key=st.secrets["GROQ_API_KEY"])
 
@@ -127,8 +118,14 @@ class AiAssistant:
                     with st.spinner(
                         "Thinking... 🏏"):
                         try:
+                            
+                            keys = [st.secrets["GEMINI1"],st.secrets["GEMINI2"],st.secrets["GEMINI3"],st.secrets["GEMINI4"],st.secrets["GEMINI5"],]
+
+                            self.client = genai.Client(api_key=random.choice(keys))
+
                               # Send the conversation to the Gemini model.
                             response = self.client.models.generate_content(model="gemini-3.6-flash",contents=conversation)
+
                             # Display Gemini's response in the chat.
                             st.markdown(response.text)
 
