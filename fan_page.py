@@ -7,7 +7,7 @@ from databaseconnection import  DatabaseConnection
 from dotenv import load_dotenv
 load_dotenv()
 
-@st.cache_resource
+
 class FanPage:
     def __init__(self):
         self.model = None

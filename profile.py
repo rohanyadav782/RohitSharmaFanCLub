@@ -1,6 +1,6 @@
 import streamlit as st
 from databaseconnection import  DatabaseConnection
-@st.cache_resource
+
 class Profile:
 
     def main(self):

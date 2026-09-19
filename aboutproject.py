@@ -797,7 +797,7 @@ class AboutProject:
         st.write(
             "The Prediction page is the core Machine Learning component of the "
             "application. It uses historical Rohit Sharma batting data and the "
-            "trained XGBoost classification model to predict whether he is likely "
+            "trained RandomForest classification model to predict whether he is likely "
             "to score 30 or more runs."
         )
 
@@ -1184,7 +1184,7 @@ class AboutProject:
 
         st.write("""
         - 📦 **Pickle / Serialized Model**
-        - 🧠 Trained XGBoost Model
+        - 🧠 Trained Random Forest Model
         - ⚙️ Preprocessing Components
         - 🎚️ Optimized Prediction Threshold
         """)

@@ -1,6 +1,7 @@
 import pandas as pd
 import  streamlit as st
 
+@st.cache_resource
 class Dataset:
     def __init__(self):
         self.raw_data = pd.read_excel("cricket_dataset.xlsx",sheet_name="raw_data")

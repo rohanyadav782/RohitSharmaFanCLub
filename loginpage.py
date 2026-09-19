@@ -7,7 +7,6 @@ import io
 
 message = SendMsg()
 
-@st.cache_resource
 class LoginPage:
     def __init__(self):
         try :

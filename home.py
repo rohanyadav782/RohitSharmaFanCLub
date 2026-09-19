@@ -3,7 +3,7 @@ from databaseconnection import  DatabaseConnection
 import io
 from dataset import Dataset
 
-@st.cache_resource
+
 class Home:
 
     def main(self):
