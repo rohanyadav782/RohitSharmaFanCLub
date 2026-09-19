@@ -1,19 +1,28 @@
 import streamlit as st
 from google import genai
 from groq import Groq
-import os
 from dotenv import load_dotenv
 load_dotenv()
+import random
 
 
 @st.cache_resource
 class AiAssistant:
+
+
     def main(self):
         # Create the Gemini API client
-        self.client = genai.Client(
-            api_key=st.secrets["GEMINI2"])
+        keys = [st.secrets["GEMINI1"],
+                st.secrets["GEMINI2"],
+                st.secrets["GEMINI3"],
+                st.secrets["GEMINI4"],
+                st.secrets["GEMINI5"],
 
-        # self.groq_client = Groq(api_key=st.secrets["GROQ_API_KEY"])
+        ]
+        self.client = genai.Client(
+            api_key= random.choice(keys))
+
+        self.groq_client = Groq(api_key=st.secrets["GROQ_API_KEY"])
 
         # System prompt that defines the AI assistant's behavior
         self.system_prompt = """
@@ -114,51 +123,52 @@ class AiAssistant:
 
             # # GENERATE AI RESPONSE
             try:
-            #     with st.chat_message("assistant"):
-            #         with st.spinner(
-            #             "Thinking... 🏏"):
-            #             try:
-            #                 groq_messages = [
-            #                     {
-            #                         "role": "system",
-            #                         "content": self.system_prompt
-            #                     }
-            #                 ]
-            #                 # Add recent conversation
-            #                 for message in recent_messages:
-            #                     groq_messages.append(
-            #                         {
-            #                             "role": message["role"],
-            #                             "content": message["content"]
-            #                         }
-            #                     )
-            #                 # Groq request
-            #                 groq_response = self.groq_client.chat.completions.create(
-            #                     model="openai/gpt-oss-20b",
-            #                     messages=groq_messages,
-            #                     temperature=0.3,
-            #                     max_tokens=800)
-            #                 answer = (groq_response.choices[0].message.content)
-            #                 st.markdown(answer)
-            #                 # Save Groq response
-            #                 st.session_state.messages.append(
-            #                     {
-            #                         "role": "assistant",
-            #                         "content": answer
-            #                     }
-            #                 )
-            #             except Exception as groq_error:
                 with st.chat_message("assistant"):
-                    with st.spinner(" Thinking2.O..."):
-                    # Send the conversation to the Gemini model.
-                        response = self.client.models.generate_content(model="gemini-3.6-flash",
-                                                                   contents=conversation)
+                    with st.spinner(
+                        "Thinking... 🏏"):
+                        try:
+                              # Send the conversation to the Gemini model.
+                            response = self.client.models.generate_content(model="gemini-3.6-flash",contents=conversation)
+                            # Display Gemini's response in the chat.
+                            st.markdown(response.text)
 
-                # Display Gemini's response in the chat.
-                st.markdown(response.text)
+                            # Store the assistant's response in session_state
+                            st.session_state.messages.append({"role": 'assistant', "content": response.text})
 
-            # Store the assistant's response in session_state
-                st.session_state.messages.append({"role": 'assistant', "content": response.text})
+
+                        except Exception as groq_error:
+                            with st.chat_message("assistant"):
+                                with st.spinner(
+                                        "Thinking... 🏏"):
+                                    groq_messages = [
+                                        {
+                                            "role": "system",
+                                            "content": self.system_prompt
+                                        }
+                                    ]
+                                    # Add recent conversation
+                                    for message in recent_messages:
+                                        groq_messages.append(
+                                            {
+                                                "role": message["role"],
+                                                "content": message["content"]
+                                            }
+                                        )
+                                    # Groq request
+                                    groq_response = self.groq_client.chat.completions.create(
+                                        model="openai/gpt-oss-20b",
+                                        messages=groq_messages,
+                                        temperature=0.3,
+                                        max_tokens=800)
+                                    answer = (groq_response.choices[0].message.content)
+                                    st.markdown(answer)
+                                    # Save Groq response
+                                    st.session_state.messages.append(
+                                        {
+                                            "role": "assistant",
+                                            "content": answer
+                                        }
+                                    )
 
                 # Create the assistant chat message container.
 
