@@ -49,7 +49,7 @@ class FanPage:
                 """
         try:
             groq_response = self.groq_client.chat.completions.create(
-                model="openai/gpt-oss-120b",
+                model="openai/gpt-oss-20b",
                 messages=[{"role": "system", "content": self.system_prompt},
                           {"role": "user", "content": "give me exactly 5 cricket news items"}],
                 temperature=0.3,
