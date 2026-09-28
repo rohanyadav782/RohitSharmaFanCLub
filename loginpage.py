@@ -28,14 +28,14 @@ class LoginPage:
                     st.image(io.BytesIO(st.session_state.loginimage))
                 except psycopg2.OperationalError as e:
                     # st.error("Network Error!,Try to delete AppCache/Reload page ")
-                    st.error("Database error, Admin trying to clear bugs... ")
+                    st.warning("Database error, Admin trying to clear bugs... ")
 
             except Exception as e:
                 st.error("Files not initialize, Plz try to delete AppCache/Reload page ")
 
         except psycopg2.OperationalError as e:
             # st.error("Network Error!,Try to delete AppCache/Reload page ")
-            st.error("Database error, Admin trying to clear bugs... ")
+            st.warning("Database error, Admin trying to clear bugs... ")
 
     def login(self):
         try:
