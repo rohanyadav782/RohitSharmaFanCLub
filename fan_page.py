@@ -60,7 +60,7 @@ class FanPage:
                     reverses = reverse[::-1]
                     index = reverses.index('-')
                     normal = reverses[index + 2:]
-                    st.write(f"{x+1}. {normal[::-1]}")
+                    st.write(f"{x+1}. {normal[::-1]}.")
 
             except Exception as e:
                 st.warning("No News Available !")
