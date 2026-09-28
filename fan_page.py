@@ -56,7 +56,11 @@ class FanPage:
                     news.append(article.title)
                 all_news = list(set(news))
                 for x in range(5):
-                    st.write(f"{x+1}. {all_news[x]}")
+                    reverse = all_news[x]
+                    reverses = reverse[::-1]
+                    index = reverses.index('-')
+                    normal = reverses[index + 2:]
+                    st.write(f"{x+1}. {normal[::-1]}")
 
             except Exception as e:
                 st.warning("No News Available !")
