@@ -66,7 +66,8 @@ class LoginPage:
 
         except Exception as f:
             # self.db.conn.rollback()
-            st.error("Network Error!,Try to delete AppCache/Reload page ")
+            # st.error("Network Error!,Try to delete AppCache/Reload page ")
+            st.warning("Database error, Admin trying to clear bugs... ")
 
 
     def creataccount(self):
@@ -83,7 +84,8 @@ class LoginPage:
 
         except Exception as f:
             # self.db.conn.rollback()
-            st.error("Unable to load users data...! ")
+            # st.error("Unable to load users data...! ")
+            st.warning("Database error, Admin trying to clear bugs... ")
 
         with col1:
             name = st.text_input("Enter your full name").title()
@@ -221,8 +223,9 @@ class LoginPage:
                     message.sharedetail(user_detail)
                 except Exception as f:
                     # self.db.conn.rollback()
-                    st.error("Unable to share detail!")
-                    st.error("Connection Failed,Check you have strong network connection and reload it...! ")
+                    # st.error("Unable to share detail!")
+                    # st.error("Connection Failed,Check you have strong network connection and reload it...! ")
+                    st.warning("Database error, Admin trying to clear bugs... ")
 
     def choice_button(self):
 
