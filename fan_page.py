@@ -1,58 +1,13 @@
 import streamlit as st
 import psycopg2
 import io
-from google import genai
-from groq import Groq
 from databaseconnection import  DatabaseConnection
 from dotenv import load_dotenv
 load_dotenv()
-import random
 import requests
 import feedparser
 
 class FanPage:
-    # def __init__(self):
-    #     self.model = None
-    #     keys = [st.secrets["GEMINI1"], st.secrets["GEMINI2"], st.secrets["GEMINI3"], st.secrets["GEMINI4"],
-    #             st.secrets["GEMINI5"], ]
-    #
-    #     self.client = genai.Client(api_key=random.choice(keys))
-    #     self.groq_client = Groq(api_key=st.secrets["GROQ_API_KEY"])
-    #
-    #     # System prompt that defines the AI assistant's behavior
-    #     self.system_prompt = """
-    #
-    #                     You are an intelligent cricket assistant focused on
-    #                     Rohit Sharma and cricket news.
-    #
-    #                     You can share news about :
-    #                     - Rohit Sharma
-    #                     - Any Cricket Player
-    #                     - Any Cricket records
-    #                     - Any Cricket terminology
-    #                     - General cricket information
-    #                     - Anything about Rohit Sharma
-    #                     - Anything about cricket news
-    #
-    #                     Give clear, accurate and easy-to-understand answers.
-    #
-    #                     Do not claim that information comes from the user's
-    #                     project dataset because the dataset has not been connected yet.
-    #
-    #                     Make sure news is related to cricket and rohit sharma else other news is not required and
-    #                     one more thing new should be genuine not any rumors or fake news should be displayed strictly collect original news no fake news should be showned,
-    #                     Make sure you will answer in only 5 line that is 5 news belongs to cricket and rohit sharma
-    #                     answer like this :1.--------
-    #                                       2.--------
-    #                                       3.--------
-    #                                       4.--------
-    #                                       5.--------
-    #                     any other format is not acceptable
-    #                     Make sure 2 new is belongs to rohit,1 belongs to Indian Player and remaining 2 belongs other cricket information
-    #
-    #             """
-
-
 
     def show_page(self):
         try :
@@ -101,7 +56,7 @@ class FanPage:
                     news.append(article.title)
                 all_news = list(set(news))
                 for x in range(5):
-                    st.write(f"{x+1}.{all_news[x]}")
+                    st.write(f"{x+1}. {all_news[x]}")
 
             except Exception as e:
                 st.warning("No News Available !")
