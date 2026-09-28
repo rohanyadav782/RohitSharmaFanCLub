@@ -101,7 +101,7 @@ class FanPage:
                     news.append(article.title)
                 all_news = list(set(news))
                 for x in range(5):
-                    st.write(all_news[x])
+                    st.write(f"{x+1}.{all_news[x]}")
 
             except Exception as e:
                 st.warning("No News Available !")
