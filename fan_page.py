@@ -7,48 +7,50 @@ from databaseconnection import  DatabaseConnection
 from dotenv import load_dotenv
 load_dotenv()
 import random
+import requests
+import feedparser
 
 class FanPage:
-    def __init__(self):
-        self.model = None
-        keys = [st.secrets["GEMINI1"], st.secrets["GEMINI2"], st.secrets["GEMINI3"], st.secrets["GEMINI4"],
-                st.secrets["GEMINI5"], ]
-
-        self.client = genai.Client(api_key=random.choice(keys))
-        self.groq_client = Groq(api_key=st.secrets["GROQ_API_KEY"])
-
-        # System prompt that defines the AI assistant's behavior
-        self.system_prompt = """
-
-                        You are an intelligent cricket assistant focused on
-                        Rohit Sharma and cricket news.
-
-                        You can share news about :
-                        - Rohit Sharma
-                        - Any Cricket Player
-                        - Any Cricket records
-                        - Any Cricket terminology
-                        - General cricket information
-                        - Anything about Rohit Sharma
-                        - Anything about cricket news
-
-                        Give clear, accurate and easy-to-understand answers.
-
-                        Do not claim that information comes from the user's
-                        project dataset because the dataset has not been connected yet.
-
-                        Make sure news is related to cricket and rohit sharma else other news is not required and 
-                        one more thing new should be genuine not any rumors or fake news should be displayed strictly collect original news no fake news should be showned,
-                        Make sure you will answer in only 5 line that is 5 news belongs to cricket and rohit sharma
-                        answer like this :1.--------
-                                          2.--------
-                                          3.--------
-                                          4.--------
-                                          5.--------
-                        any other format is not acceptable
-                        Make sure 2 new is belongs to rohit,1 belongs to Indian Player and remaining 2 belongs other cricket information
-
-                """
+    # def __init__(self):
+    #     self.model = None
+    #     keys = [st.secrets["GEMINI1"], st.secrets["GEMINI2"], st.secrets["GEMINI3"], st.secrets["GEMINI4"],
+    #             st.secrets["GEMINI5"], ]
+    #
+    #     self.client = genai.Client(api_key=random.choice(keys))
+    #     self.groq_client = Groq(api_key=st.secrets["GROQ_API_KEY"])
+    #
+    #     # System prompt that defines the AI assistant's behavior
+    #     self.system_prompt = """
+    #
+    #                     You are an intelligent cricket assistant focused on
+    #                     Rohit Sharma and cricket news.
+    #
+    #                     You can share news about :
+    #                     - Rohit Sharma
+    #                     - Any Cricket Player
+    #                     - Any Cricket records
+    #                     - Any Cricket terminology
+    #                     - General cricket information
+    #                     - Anything about Rohit Sharma
+    #                     - Anything about cricket news
+    #
+    #                     Give clear, accurate and easy-to-understand answers.
+    #
+    #                     Do not claim that information comes from the user's
+    #                     project dataset because the dataset has not been connected yet.
+    #
+    #                     Make sure news is related to cricket and rohit sharma else other news is not required and
+    #                     one more thing new should be genuine not any rumors or fake news should be displayed strictly collect original news no fake news should be showned,
+    #                     Make sure you will answer in only 5 line that is 5 news belongs to cricket and rohit sharma
+    #                     answer like this :1.--------
+    #                                       2.--------
+    #                                       3.--------
+    #                                       4.--------
+    #                                       5.--------
+    #                     any other format is not acceptable
+    #                     Make sure 2 new is belongs to rohit,1 belongs to Indian Player and remaining 2 belongs other cricket information
+    #
+    #             """
 
 
 
@@ -88,28 +90,18 @@ class FanPage:
 
     def news(self):
         with st.spinner("Loading news..."):
-
             st.subheader("Cricket News")
-
             try:
-                groq_response = self.groq_client.chat.completions.create(
-                    model="openai/gpt-oss-120b",
-                    messages=[{"role": "system", "content": self.system_prompt},
-                              {"role": "user", "content": "give me exactly 5 cricket news items"}],
-                    temperature=0.3,
-                    max_tokens=1000)
-
-                self.news_groq = (groq_response.choices[0].message.content)
-                self.model = "groq"
-
-                if self.news_groq == "":
-                    self.response = self.client.models.generate_content(model="gemini-3.6-flash",
-                                                                        contents=self.system_prompt + "refresh news dont share recent news")
-                    st.session_state.response = self.response
-                    self.model = "gemini"
-                    st.markdown(self.response.text)
-                else:
-                    st.markdown(self.news_groq)
+                url = "https://news.google.com/rss/search?q=cricket&hl=en-IN&gl=IN&ceid=IN:en"
+                response = requests.get(url)
+                feed = feedparser.parse(response.content)
+                news = []
+                for article in feed.entries:
+                    print(article.title)
+                    news.append(article.title)
+                all_news = list(set(news))
+                for x in range(5):
+                    st.write(all_news[x])
 
             except Exception as e:
                 st.warning("No News Available !")
